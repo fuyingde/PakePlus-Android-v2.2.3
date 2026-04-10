@@ -1,11 +1,476 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
     <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>PakePlus</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+        <title>🌟奥特曼学习助手</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+ 
+            body {
+                background: linear-gradient(135deg, #0a0a2a, #1a1a4a);
+                color: #e0e0ff;
+                font-family: 'Microsoft YaHei', sans-serif;
+                min-height: 100vh;
+                padding: 10px;
+            }
+ 
+            .container {
+                max-width: 800px;
+                margin: 0 auto;
+            }
+ 
+            header {
+                text-align: center;
+                margin-bottom: 20px;
+            }
+ 
+            h1 {
+                color: #4dffdb;
+                text-shadow: 0 0 15px #00f0ff;
+                font-size: 26px;
+            }
+ 
+            .subtitle {
+                color: #a0a0ff;
+                font-size: 16px;
+            }
+ 
+            .stats {
+                display: flex;
+                justify-content: space-around;
+                background: rgba(30, 30, 60, 0.7);
+                border: 2px solid #4dffdb;
+                border-radius: 10px;
+                padding: 15px;
+                margin-bottom: 20px;
+            }
+ 
+            .stat-item {
+                text-align: center;
+            }
+ 
+            .stat-value {
+                font-size: 28px;
+                font-weight: bold;
+                color: #00f0ff;
+            }
+ 
+            .stat-label {
+                font-size: 14px;
+                color: #a0a0ff;
+            }
+ 
+            .game-area {
+                background: rgba(20, 20, 40, 0.8);
+                border: 2px solid #4dffdb;
+                border-radius: 10px;
+                padding: 20px;
+                margin-bottom: 20px;
+                text-align: center;
+            }
+ 
+            .question {
+                font-size: 22px;
+                margin: 20px 0;
+                min-height: 50px;
+            }
+ 
+            .options {
+                display: flex;
+                gap: 10px;
+                justify-content: center;
+                flex-wrap: wrap;
+                margin-bottom: 15px;
+            }
+ 
+            .btn {
+                padding: 10px 20px;
+                font-size: 16px;
+                border: none;
+                border-radius: 8px;
+                background: #2a2a5a;
+                color: white;
+            }
+ 
+            .btn:hover {
+                background: #3a3a7a;
+            }
+ 
+            .btn-correct {
+                background: #00c853;
+            }
+ 
+            .btn-wrong {
+                background: #ff5252;
+            }
+ 
+            .reward-section {
+                background: rgba(20, 20, 40, 0.8);
+                border: 2px solid #4dffdb;
+                border-radius: 10px;
+                padding: 20px;
+            }
+ 
+            .reward-title {
+                text-align: center;
+                color: #4dffdb;
+                margin-bottom: 15px;
+            }
+ 
+            .ultraman-grid {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+                justify-content: center;
+            }
+ 
+            .ultraman {
+                width: 50px;
+                height: 50px;
+                background: #ffcc00;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+ 
+            .ultraman svg {
+                width: 35px;
+                height: 35px;
+            }
+ 
+            .redeem-btn {
+                background: linear-gradient(135deg, #4dffdb, #00a8ff);
+                color: white;
+                padding: 12px 24px;
+                font-size: 18px;
+                border: none;
+                border-radius: 10px;
+                margin: 15px auto;
+                display: block;
+            }
+ 
+            .redeem-btn:disabled {
+                background: #555;
+                cursor: not-allowed;
+            }
+ 
+            .modal {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.8);
+                align-items: center;
+                justify-content: center;
+            }
+ 
+            .modal-content {
+                background: #0d0d3a;
+                border: 2px solid #4dffdb;
+                border-radius: 15px;
+                padding: 20px;
+                text-align: center;
+                width: 90%;
+                max-width: 350px;
+            }
+ 
+            .modal-qr {
+                width: 180px;
+                height: 180px;
+                background: white;
+                margin: 15px auto;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+ 
+            .close-btn {
+                background: #ff5252;
+                color: white;
+                border: none;
+                padding: 8px 16px;
+                border-radius: 5px;
+                margin-top: 10px;
+            }
+ 
+            .rules {
+                background: rgba(30, 30, 60, 0.5);
+                border-left: 4px solid #4dffdb;
+                padding: 12px;
+                margin-top: 20px;
+                font-size: 13px;
+            }
+ 
+            @keyframes pulse {
+                0% {
+                    transform: scale(1);
+                }
+ 
+                50% {
+                    transform: scale(1.05);
+                }
+ 
+                100% {
+                    transform: scale(1);
+                }
+            }
+ 
+            .pulse {
+                animation: pulse 1.5s infinite;
+            }
+        </style>
     </head>
     <body>
-        PakePlus
+ 
+        <div class="container">
+            <header>
+                <h1>🌟奥特曼学习助手</h1>
+                <p class="subtitle">10题全对=1个奥特曼｜5个兑换玩手机10分钟</p>
+            </header>
+ 
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-value" id="ultraman-count">0</div>
+                    <div class="stat-label">当前奥特曼</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="today-earned">0</div>
+                    <div class="stat-label">今日已获</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="redeem-count">0</div>
+                    <div class="stat-label">今日兑换</div>
+                </div>
+            </div>
+ 
+            <div class="game-area">
+                <div class="question" id="question">点击【开始新关卡】生成10道题</div>
+                <div class="options" id="options"></div>
+                <button class="btn" id="start-btn">▶ 开始新关卡</button>
+                <button class="btn" id="next-btn" style="display:none;">▶ 下一题</button>
+            </div>
+ 
+            <div class="reward-section">
+                <h2 class="reward-title">你的奥特曼收藏</h2>
+                <div class="ultraman-grid" id="ultraman-grid"></div>
+                <button class="redeem-btn" id="redeem-btn" disabled>🎁兑换玩手机10分钟</button>
+            </div>
+ 
+            <div class="rules">
+                <strong>规则说明：</strong><br>
+                • 每关10题：全部答对才成功！错1题即失败<br>
+                • 20以内加减法，结果≥0<br>
+                • 成功1关=+1奥特曼<br>
+                • 5个奥特曼=兑换10分钟玩手机<br>
+                • 每日上限：100奥特曼｜5次兑换
+            </div>
+        </div>
+ 
+        <div id="qr-modal" class="modal">
+            <div class="modal-content">
+                <h3>✅兑换成功！</h3>
+                <p class="modal-text">请截图保存二维码，家长扫码核销</p>
+                <div class="modal-qr" id="qr-container"></div>
+                <p class="modal-text">⚠️1小时后失效</p>
+                <button class="close-btn" id="close-qr">我知道了</button>
+            </div>
+        </div>
+ 
+        <script src="https://cdn.jsdelivr.net/npm/qrious@4.0.2/dist/qrious.min.js"></script>
+        <script>
+            const ULTRAMAN_SVG = `
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+<circle cx="50" cy="30" r="25" fill="#ffcc00"/>
+<circle cx="40" cy="25" r="5" fill="#000"/>
+<circle cx="60" cy="25" r="5" fill="#000"/>
+<path d="M35 45 Q50 55 65 45" stroke="#000" fill="none" stroke-width="2"/>
+<polygon points="50,10 30,30 70,30" fill="#ff0000"/>
+<rect x="35" y="55" width="30" height="30" fill="#ffcc00" rx="5"/>
+<rect x="25" y="55" width="10" height="20" fill="#ffcc00" rx="3"/>
+<rect x="65" y="55" width="10" height="20" fill="#ffcc00" rx="3"/>
+<rect x="40" y="85" width="10" height="20" fill="#ffcc00" rx="3"/>
+<rect x="50" y="85" width="10" height="20" fill="#ffcc00" rx="3"/>
+</svg>`;
+ 
+            let today = new Date().toISOString().split('T')[0];
+            let data = JSON.parse(localStorage.getItem('ultraman_data')) || {
+                ultraman: 0,
+                today_earned: 0,
+                redeem_count: 0,
+                last_reset: today,
+                redeem_history: []
+            };
+ 
+            if (data.last_reset !== today) {
+                data = {
+                    ultraman: 0,
+                    today_earned: 0,
+                    redeem_count: 0,
+                    last_reset: today,
+                    redeem_history: []
+                };
+                localStorage.setItem('ultraman_data', JSON.stringify(data));
+            }
+ 
+            function updateUI() {
+                document.getElementById('ultraman-count').textContent = data.ultraman;
+                document.getElementById('today-earned').textContent = data.today_earned;
+                document.getElementById('redeem-count').textContent = data.redeem_count;
+                const g = document.getElementById('ultraman-grid');
+                g.innerHTML = '';
+                for (let i = 0; i < data.ultraman; i++) {
+                    let d = document.createElement('div');
+                    d.className = 'ultraman';
+                    d.innerHTML = ULTRAMAN_SVG;
+                    g.appendChild(d);
+                }
+                const b = document.getElementById('redeem-btn');
+                b.disabled = data.ultraman < 5 || data.redeem_count >= 5;
+                b.classList.toggle('pulse', !b.disabled);
+            }
+ 
+            function generateQuestion() {
+                const t = Math.random();
+                if (t < 0.4) {
+                    let a, b;
+                    do {
+                        a = Math.floor(Math.random() * 21);
+                        b = Math.floor(Math.random() * 21);
+                    } while (a + b > 20);
+                    const o = Math.random() < 0.5 ? '+' : '-';
+                    if (o == '+') {
+                        return {
+                            q: `${a}+${b}=?`,
+                            a: a + b,
+                            s: [a + b, a + b + 1, a + b - 1].filter(x => x >= 0 && x <= 20)
+                        }
+                    } else {
+                        const mx = Math.max(a, b),
+                            mn = Math.min(a, b);
+                        return {
+                            q: `${mx}-${mn}=?`,
+                            a: mx - mn,
+                            s: [mx - mn, mx - mn + 1, mx - mn - 1].filter(x => x >= 0)
+                        }
+                    }
+                } else if (t < 0.7) {
+                    let a, b, c;
+                    do {
+                        a = ~~(Math.random() * 11);
+                        b = ~~(Math.random() * 11);
+                        c = ~~(Math.random() * 11);
+                    } while (a + b + c > 20);
+                    let o1 = Math.random() < .5 ? '+' : '-',
+                        o2 = Math.random() < .5 ? '+' : '-';
+                    let r = 0,
+                        e = '';
+                    if (o1 == '+' && o2 == '+') {
+                        e = `${a}+${b}+${c}`;
+                        r = a + b + c;
+                    } else if (o1 == '+' && o2 == '-') {
+                        e = `${a}+${b}-${c}`;
+                        r = a + b - c;
+                    } else if (o1 == '-' && o2 == '+') {
+                        e = `${a}-${b}+${c}`;
+                        r = a - b + c;
+                    } else {
+                        e = `${a}-${b}-${c}`;
+                        r = a - b - c;
+                    }
+                    if (r < 0) return generateQuestion();
+                    return {
+                        q: e + '=?',
+                        a: r,
+                        s: [r, r + 1, r - 1].filter(x => x >= 0 && x <= 20)
+                    };
+                } else {
+                    let a = ~~(Math.random() * 21),
+                        b = ~~(Math.random() * 21);
+                    let ans = a > b ? '>' : a < b ? '<' : '=';
+                    return {
+                        q: `${a}○${b}`,
+                        a: ans,
+                        s: ['>', '<', '=']
+                    };
+                }
+            }
+ 
+            let level = [],
+                idx = 0,
+                cor = 0;
+ 
+            document.getElementById('start-btn').onclick = () => {
+                level = [];
+                for (let i = 0; i < 10; i++) level.push(generateQuestion());
+                idx = 0;
+                cor = 0;
+                show();
+                startBtn.style.display = 'none';
+                nextBtn.style.display = 'inline-block';
+            };
+ 
+            function show() {
+                if (idx >= level.length) {
+                    if (cor === 10) {
+                        alert('🎉闯关成功！获得1个奥特曼！');
+                        if (data.today_earned < 100) {
+                            data.ultraman++;
+                            data.today_earned++;
+                            localStorage.setItem('ultraman_data', JSON.stringify(data));
+                            updateUI();
+                        } else alert('今日奥特曼已达上限100个');
+                    } else {
+                        alert('❌闯关失败！需10题全对');
+                    }
+                    nextBtn.style.display = 'none';
+                    startBtn.style.display = 'inline-block';
+                    return;
+                }
+                const q = level[idx];
+                document.getElementById('question').textContent = q.q;
+                const o = document.getElementById('options');
+                o.innerHTML = '';
+                q.s.forEach(x => {
+                    let b = document.createElement('button');
+                    b.className = 'btn';
+                    b.textContent = x;
+                    b.onclick = () => {
+                        b.classList.add(x == q.a ? 'btn-correct' : 'btn-wrong');
+                        if (x == q.a) cor++;
+                        setTimeout(() => {
+                            idx++;
+                            show();
+                        }, 700);
+                    };
+                    o.appendChild(b);
+                });
+            }
+ 
+            document.getElementById('redeem-btn').onclick = () => {
+                if (data.ultraman < 5 || data.redeem_count >= 5) return;
+                data.ultraman -= 5;
+                data.redeem_count++;
+                localStorage.setItem('ultraman_data', JSON.stringify(data));
+                updateUI();
+                document.getElementById('qr-modal').style.display = 'flex';
+                new QRious({
+                    element: document.getElementById('qr-container'),
+                    value: 'ULTRAMAN:' + Date.now(),
+                    size: 180
+                });
+            };
+            document.getElementById('close-qr').onclick = () => {
+                document.getElementById('qr-modal').style.display = 'none';
+            };
+            updateUI();
+        </script>
     </body>
 </html>
